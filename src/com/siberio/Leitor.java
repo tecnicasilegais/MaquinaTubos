@@ -1,15 +1,16 @@
 package com.siberio;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class Leitor
 {
-	public ArrayList<ArrayList<Destino>> lerGabarito(String strArquivo)
+	public Stream<String> lerArquivo(String strArquivo) throws IOException
 	{
-		File arquivo = new File(strArquivo);
-		BufferedReader br = new BufferedReader(new FileReader(arquivo));
+		Stream<String> stringStream = Files.lines(Paths.get(strArquivo), StandardCharsets.US_ASCII);
+		return stringStream;
 	}
 }
