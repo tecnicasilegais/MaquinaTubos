@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public class Leitor
 {
-	public Stream<String> lerArquivo(String strArquivo) throws IOException
+	public static Stream<String> lerArquivo(String strArquivo) throws IOException
 	{
 		Stream<String> stringStream = Files.lines(Paths.get(strArquivo), StandardCharsets.US_ASCII);
 		return stringStream;
