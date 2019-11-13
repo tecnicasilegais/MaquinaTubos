@@ -48,8 +48,8 @@ public class Nodo implements Comparable<Nodo>
 	{
 		return Comparator
 				.comparingInt(Nodo::getCanoOrigem)
-				.thenComparingInt(Nodo::getAlturaOrigem)
 				.thenComparingInt(Nodo::getCanoDestino)
+				.thenComparingInt(Nodo::getAlturaOrigem)
 				.thenComparingInt(Nodo::getAlturaDestino)
 				.compare(this, o);
 	}
