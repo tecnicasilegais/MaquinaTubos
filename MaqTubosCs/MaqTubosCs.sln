@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaqTubosCs", "MaqTubosCs.csproj", "{C8302DD4-5F8A-44BF-A824-B0B255AA06CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8302DD4-5F8A-44BF-A824-B0B255AA06CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8302DD4-5F8A-44BF-A824-B0B255AA06CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8302DD4-5F8A-44BF-A824-B0B255AA06CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8302DD4-5F8A-44BF-A824-B0B255AA06CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B94D5963-8145-45FB-A169-78384D740611}
+	EndGlobalSection
+EndGlobal
