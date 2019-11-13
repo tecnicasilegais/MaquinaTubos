@@ -1,14 +1,17 @@
 package com.siberio;
 
+import java.nio.file.NoSuchFileException;
+import java.text.MessageFormat;
+
 public class App
 {
 	public static void main(String[] args)
 	{
-		if (args.length <= 0)
+		for (int i = 1; i <= 8; i++)
 		{
-			args = new String[1];
-			args[0] = "data/caso8.txt";
+			System.out.println("=== \t TESTE " + i + " \t ===");
+			new Maquina("data/caso" + i + ".txt");
+			System.out.println();
 		}
-		System.out.println(new Maquina(args[0]).calcularResultado());
 	}
 }

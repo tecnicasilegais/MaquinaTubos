@@ -1,6 +1,8 @@
 package com.siberio;
 
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
@@ -20,6 +22,7 @@ public class Maquina
 		LinkedList<Nodo> lista = new LinkedList<Nodo>();
 		try
 		{
+			long inicio = System.nanoTime();
 			Stream<String> stringStream = Leitor.lerArquivo(strArquivo);
 			lista = stringStream.map(str ->
 					str.split(" "))
@@ -30,8 +33,18 @@ public class Maquina
 							Integer.parseInt(arrayStr[2]),
 							Integer.parseInt(arrayStr[3])))
 					.collect(Collectors.toCollection(LinkedList::new));
+			long leitura = System.nanoTime();
+			System.out.println("Tempo de leitura: " + ((leitura - inicio) / 1000000000.0) + "s");
 
-			//Collections.sort(lista);
+			Collections.sort(lista);
+
+			long ordenacao = System.nanoTime();
+			System.out.println("Tempo de ordenacao: " + ((ordenacao - leitura) / 1000000000.0) + "s");
+			System.out.println("Total: " + ((ordenacao - inicio) / 1000000000.0) + "s");
+		}
+		catch (NoSuchFileException e)
+		{
+			System.out.println(MessageFormat.format("Arquivo {0} não encontrado.", strArquivo));
 		}
 		catch (IOException e)
 		{
