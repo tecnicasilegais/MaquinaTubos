@@ -12,7 +12,6 @@ namespace MaqTubosCs
         private long _nroTubos;
         private long _altura;
         private Tubo[] _tubos;
-
         #endregion
 
         #region Propriedades
@@ -35,7 +34,7 @@ namespace MaqTubosCs
             ///<summary>Cria uma instância de Tubo para cada posição no vetor</summary>
             for (long i=0; i<nroTubos; i++)
             {
-                _tubos[i] = new Tubo();
+                _tubos[i] = new Tubo(_altura);
             }
 
 
@@ -59,7 +58,9 @@ namespace MaqTubosCs
         {
             try
             {
+                //chama o metodo responsavel por adicionar uma ligacao no tubo especifico
                 _tubos[tuboPartida].AdicionarLigacao(altura, tuboDestino, alturaDestino);
+
                 return true;
             }
             catch(Exception)
@@ -67,7 +68,46 @@ namespace MaqTubosCs
                 return false;
             }
         }
+        /// <summary>retorna a string dizendo qual o tubo que tem mais bolinhas saindo dele </summary>
+        /// <returns>String com a resposta</returns>
+        public String MaiorNumero()
+        {
+            long qtd = -1;
+            long idx = -1;
+            for (long i =0; i<_tubos.Length; i++)
+            {
+                if (_tubos[i]._qtdBolas > qtd)
+                {
+                    qtd = _tubos[i]._qtdBolas;
+                    idx = i;
+                }
+            }
+            return String.Format("Máximo: cano {0}, com {1} bolinhas.",idx, qtd);
+        }
 
+        private void InsereBolinha(long nroTb)
+        {
+            try
+            {
+                //começa na altura zero
+                long h = 0;
+                long nroTbFinal = -1;
+                //chamar metodo de procurar Conexão em Tubo
+                Destino busca;
+                do
+                {
+                    busca = _tubos[nroTb].ProcuraConexao(h);
+                    h = busca.altura;
+
+                }
+                while (busca.Valida() != Validacao.Fim || busca.Valida() != Validacao.Erro);
+
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
         #endregion
     }
 }

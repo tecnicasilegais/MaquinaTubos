@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 using System.Linq;
 
 namespace MaqTubosCs
@@ -27,7 +28,9 @@ namespace MaqTubosCs
 
                 //instancia a maquina com a quantidade de tubos e altura lida no documento.
                 MaquinaTubos maquina = new MaquinaTubos(nroTubos, altura);
-                
+
+                //Calcula o tempo de execução da leitura e instanciação das conexões
+                Stopwatch sw = Stopwatch.StartNew();
                 //roda o documento de texto a partir da linha 2 lendo as conexões presentes e enviando para a maquina
                 for (long i = 1; i<docLines.Length; i++)
                 {
@@ -44,8 +47,14 @@ namespace MaqTubosCs
                     long hD = Convert.ToInt64(dados[3]);
                     maquina.InsereConexao(tb, h, tbD, hD);
                 }
+                sw.Stop();
+                Console.WriteLine("tempo para preenchimento: {0} ms", sw.ElapsedMilliseconds);
 
-                Console.WriteLine("sucesos ate aqui");
+                sw = Stopwatch.StartNew();
+
+
+                sw.Stop();
+                Console.WriteLine("tempo de execução do andamento: {0} ms", sw.ElapsedMilliseconds);
 
             }
             catch (Exception ex)

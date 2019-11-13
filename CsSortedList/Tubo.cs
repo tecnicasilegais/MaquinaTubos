@@ -8,32 +8,18 @@ namespace MaqTubosCs
     public class Tubo
     {
         #region Atributos
+        private long _alturaMaquina;
         public long _qtdBolas;
         private SortedList<Int64, Destino> _ligacoes;
-        /// <summary>Classe interna utilizada para apontar as ligações.</summary>
-        internal class Destino
-        {
-            /// <summary>Altura no tubo destino</summary>
-            public long altura;
-            /// <summary>Numero do tubo destino. </summary>
-            public long tuboDestino;
-
-            /// <summary>Classe auxiliar usada para representar o alvo de uma ligação com o tubo atual.</summary>
-            /// <param name="altura">altura para onde a ligação aponta.</param>
-            /// <param name="tuboDestino">tubo que recebe a ligação.</param>
-            public Destino(long altura, long tuboDestino)
-            {
-                this.altura = altura;
-                this.tuboDestino = tuboDestino;
-            }
-        }
+ 
 
         #endregion
 
         #region Construtor
         /// <summary>Cria uma Instancia de tubo começando com 0 bolas e com uma lista vazia de ligações.</summary>
-        public Tubo()
+        public Tubo(long alturaMaquina)
         {
+            this._alturaMaquina = alturaMaquina;
             this._qtdBolas = 0;
             this._ligacoes = new SortedList<long, Destino>();
         }
@@ -55,6 +41,28 @@ namespace MaqTubosCs
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        public Destino ProcuraConexao(long alturaAtual)
+        {
+            try
+            {
+                //percorre a Lista a partir da posição da altura que foi recebida e procura conexões com outra bolinha
+                for (long i = alturaAtual; i < _alturaMaquina; i++)
+                {
+                    //Se encontar uma chave com o valor de altura, significa q ele sai do tubo neste ponto
+                    if (_ligacoes.ContainsKey(i))
+                    {
+                        return _ligacoes[i];
+                    }
+                }
+                //se não encontrar uma chave, significa q ele fica no tubo até o fim.
+                return new Destino(_alturaMaquina, -1);
+            }
+            catch (Exception)
+            {
+                return new Destino(-1, -1);
             }
         }
         #endregion
