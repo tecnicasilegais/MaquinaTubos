@@ -17,6 +17,22 @@ public class Nodo implements Comparable<Nodo>
 		this.alturaDestino = alturaDestino;
 	}
 
+	public boolean equals(Nodo nodoParam)
+	{
+		if (this == nodoParam) { return true; }
+		if (nodoParam == null || getClass() != nodoParam.getClass()) { return false; }
+		if (!super.equals(nodoParam)) { return false; }
+		return canoOrigem == nodoParam.canoOrigem &&
+				alturaOrigem == nodoParam.alturaOrigem &&
+				canoDestino == nodoParam.canoDestino &&
+				alturaDestino == nodoParam.alturaDestino;
+	}
+
+	public int hashCode()
+	{
+		return java.util.Objects.hash(super.hashCode(), canoOrigem, alturaOrigem, canoDestino, alturaDestino);
+	}
+
 	public int getCanoOrigem()
 	{
 		return canoOrigem;
