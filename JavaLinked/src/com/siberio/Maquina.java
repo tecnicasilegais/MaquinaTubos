@@ -31,7 +31,7 @@ public class Maquina
 							Integer.parseInt(arrayStr[3])))
 					.collect(Collectors.toCollection(LinkedList::new));
 
-			Collections.sort(lista);
+			//Collections.sort(lista);
 		}
 		catch (IOException e)
 		{

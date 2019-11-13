@@ -7,7 +7,7 @@ public class App
 		if (args.length <= 0)
 		{
 			args = new String[1];
-			args[0] = "input/caso1.txt";
+			args[0] = "data/caso8.txt";
 		}
 		System.out.println(new Maquina(args[0]).calcularResultado());
 	}
