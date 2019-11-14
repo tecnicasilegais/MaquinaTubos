@@ -33,6 +33,7 @@ public class Maquina
 							Integer.parseInt(arrayStr[2]),
 							Integer.parseInt(arrayStr[3])))
 					.collect(Collectors.toCollection(LinkedList::new));
+
 			long leitura = System.nanoTime();
 			System.out.println("Tempo de leitura: " + ((leitura - inicio) / 1000000000.0) + "s");
 

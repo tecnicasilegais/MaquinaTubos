@@ -10,7 +10,6 @@ public class Leitor
 {
 	public static Stream<String> lerArquivo(String strArquivo) throws IOException
 	{
-		Stream<String> stringStream = Files.lines(Paths.get(strArquivo), StandardCharsets.US_ASCII);
-		return stringStream;
+		return Files.lines(Paths.get(strArquivo), StandardCharsets.US_ASCII);
 	}
 }
