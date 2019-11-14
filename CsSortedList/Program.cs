@@ -59,7 +59,7 @@ namespace MaqTubosCs
 
                 sw = Stopwatch.StartNew();
 
-                Console.WriteLine(maquina.Resultados());
+                maquina.ResultadosConsole();
 
                 sw.Stop();
                 Console.WriteLine("tempo da impressão de resultados: {0} ms", sw.ElapsedMilliseconds);

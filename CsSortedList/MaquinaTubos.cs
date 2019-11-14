@@ -15,9 +15,6 @@ namespace MaqTubosCs
         private Boolean _inseriu;
         #endregion
 
-        #region Propriedades
-        #endregion
-
         #region Construtor
 
         /// <summary>Metodo construtor que cria uma nova instância da Maquina de Tubos</summary>
@@ -32,7 +29,9 @@ namespace MaqTubosCs
             ///<see cref="Tubo"/>
             _tubos = new Tubo[nroTubos];
 
+            //na inicialização, ainda não houve inserção de bolinhas no sistema.
             this._inseriu = false;
+
             ///<summary>Cria uma instância de Tubo para cada posição no vetor</summary>
             for (long i = 0; i < nroTubos; i++)
             {
@@ -65,35 +64,25 @@ namespace MaqTubosCs
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
-        /// <summary>retorna a string dizendo qual o tubo que tem mais bolinhas saindo dele </summary>
-        /// <returns>String com a resposta</returns>
-        public String MaiorNumero()
-        {
-            long qtd = -1;
-            long idx = -1;
-            for (long i = 0; i < _tubos.Length; i++)
-            {
-                if (_tubos[i]._qtdBolas > qtd)
-                {
-                    qtd = _tubos[i]._qtdBolas;
-                    idx = i;
-                }
-            }
-            return String.Format("Máximo: cano {0}, com {1} bolinhas.", idx, qtd);
-        }
 
-        public String Resultados()
+        /// <summary>Coleta os resultados da inserção na maquina e os imprime em uma String no Console.</summary>
+        public void ResultadosConsole()
         {
             StringBuilder sb = new StringBuilder();
             if (_inseriu)
             {
+                //inicializando variaveis auxiliares em posição inválida.
                 long maxVal = -1;
                 long maxIndex = -1;
+
+                //percorre toda lista de tubos fazendo impressão dos dados do resultado.
+                //ao mesmo tempo vai verificando o tubo com maior quantidade de saidas.
                 for (long i = 0; i < _nroTubos; i++)
                 {
                     sb.AppendLine(String.Format("Tubo : {0}, bolinhas : {1}", i, _tubos[i]._qtdBolas));
@@ -105,27 +94,31 @@ namespace MaqTubosCs
                 }
                 sb.AppendLine(String.Format("Tubo com maior quantidade de bolinhas: {0}, quantidade: {1}", maxIndex, maxVal));
                 sb.AppendLine(String.Format("Quantidade bolinhas: {0}, qntd que sairam : {1}", _nroTubos, _tubos.Sum(tb => tb._qtdBolas)));
-                return sb.ToString();
+                Console.WriteLine(sb.ToString());
             }
             else
             {
-                return String.Empty;
+                Console.WriteLine("Você deve executar primeiro a inserção, para depois coletar os resultados!!!");
             }
         }
 
+        /// <summary>Insere uma bolinha em cada tubo do sistema da Maquina.</summary>
+        /// <returns>Variavel de controle para sucesso / fracasso</returns>
         public Boolean InsereTodasBolinhas()
         {
                 bool isok = false;
             try
             {
+                //percorre toda lista de tubos inserindo uma bolinha em cada.
                 for (long i = 0; i < _nroTubos; i++)
                 {
                     InsereBolinha(i);
                 }
                 isok = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 isok = false;
             }
             finally
@@ -135,12 +128,17 @@ namespace MaqTubosCs
             return isok;
         }
 
+        /// <summary>
+        /// Insere uma bolinha em UM tubo, mandado por parametro pelo outro metodo
+        /// ao final da execucao,  a bolinha estará no tubo por onde saiu.</summary>
+        /// <param name="nroTb">Numero do tubo em que está sendo inserida a bolinha.</param>
         private void InsereBolinha(long nroTb)
         {
             try
             {
                 //começa na altura zero
                 long h = 0;
+                //variavel auxiliar para o numero do tubo
                 long nroTbAtual = nroTb;
                 //chamar metodo de procurar Conexão em Tubo
                 Destino busca;
@@ -148,6 +146,8 @@ namespace MaqTubosCs
                 {
                     busca = _tubos[nroTbAtual].ProcuraConexao(h);
                     h = busca.altura;
+                    //se a validação for tipo Fim, significa que já saiu do tubo, então não mudamos a variável nroTuboAtual
+                    //para nao colocara qtdBolas em um valor invalido
                     if (busca.Valida() != Validacao.Fim)
                     {
                         nroTbAtual = busca.tuboDestino;
@@ -155,15 +155,18 @@ namespace MaqTubosCs
                 }
                 while (busca.Valida() == Validacao.Desvio);
 
+                //ao fim da execução, verifica se foi erro
                 if (busca.Valida() == Validacao.Erro)
                 {
+                    Console.WriteLine("ERRO EM UMA INSERÇÂO");
                     return;
                 }
-
+                //incrementa a quantidade de bolinhas no tubo final.
                 _tubos[nroTbAtual]._qtdBolas++;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return;
             }
         }

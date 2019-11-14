@@ -43,7 +43,9 @@ namespace MaqTubosCs
                 return false;
             }
         }
-
+        /// <summary>Procura uma conexão saindo do tubo atual a partir da altura recebida</summary>
+        /// <param name="alturaAtual">altura de onde parte a pesquisa.</param>
+        /// <returns></returns>
         public Destino ProcuraConexao(long alturaAtual)
         {
             try
@@ -60,8 +62,9 @@ namespace MaqTubosCs
                 //se não encontrar uma chave, significa q ele fica no tubo até o fim.
                 return new Destino(_alturaMaquina, -1);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return new Destino(-1, -1);
             }
         }
