@@ -329,6 +329,7 @@ ASALocalRun/
 #testcases
 caso*.txt
 
+*.txt
 rn/input/caso8.txt
 rn/input/caso7.txt
 rn/input/caso6.txt

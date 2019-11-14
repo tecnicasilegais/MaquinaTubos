@@ -10,7 +10,7 @@ namespace MaqTubosCs
     class Program
     {
         private const String Root = @"../../../data/";
-        private static String filename = "caso1.txt"; //editar o nome aqui para outros testes
+        private static String filename = "caso8.txt"; //editar o nome aqui para outros testes
         static void Main(string[] args)
         {
             try
@@ -52,9 +52,17 @@ namespace MaqTubosCs
 
                 sw = Stopwatch.StartNew();
 
+                var testa = maquina.InsereTodasBolinhas();
 
                 sw.Stop();
                 Console.WriteLine("tempo de execução do andamento: {0} ms", sw.ElapsedMilliseconds);
+
+                sw = Stopwatch.StartNew();
+
+                Console.WriteLine(maquina.Resultados());
+
+                sw.Stop();
+                Console.WriteLine("tempo da impressão de resultados: {0} ms", sw.ElapsedMilliseconds);
 
             }
             catch (Exception ex)

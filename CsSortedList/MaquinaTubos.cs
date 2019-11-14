@@ -12,27 +12,29 @@ namespace MaqTubosCs
         private long _nroTubos;
         private long _altura;
         private Tubo[] _tubos;
+        private Boolean _inseriu;
         #endregion
 
         #region Propriedades
         #endregion
 
         #region Construtor
-        
+
         /// <summary>Metodo construtor que cria uma nova instância da Maquina de Tubos</summary>
         /// <param name="nroTubos">Quantidade de tubos que a maquina terá.</param>
         /// <param name="altura">Numero de altura da maquina.</param>
         public MaquinaTubos(long nroTubos, long altura)
         {
             this._nroTubos = nroTubos;
-            this._altura = altura; 
+            this._altura = altura;
 
             ///<summary>Inicializa um vetor de Tubos com o tamanho sendo a quantidade de tubos definida pelo usuário.</summary>
             ///<see cref="Tubo"/>
             _tubos = new Tubo[nroTubos];
 
+            this._inseriu = false;
             ///<summary>Cria uma instância de Tubo para cada posição no vetor</summary>
-            for (long i=0; i<nroTubos; i++)
+            for (long i = 0; i < nroTubos; i++)
             {
                 _tubos[i] = new Tubo(_altura);
             }
@@ -63,7 +65,7 @@ namespace MaqTubosCs
 
                 return true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -74,7 +76,7 @@ namespace MaqTubosCs
         {
             long qtd = -1;
             long idx = -1;
-            for (long i =0; i<_tubos.Length; i++)
+            for (long i = 0; i < _tubos.Length; i++)
             {
                 if (_tubos[i]._qtdBolas > qtd)
                 {
@@ -82,7 +84,55 @@ namespace MaqTubosCs
                     idx = i;
                 }
             }
-            return String.Format("Máximo: cano {0}, com {1} bolinhas.",idx, qtd);
+            return String.Format("Máximo: cano {0}, com {1} bolinhas.", idx, qtd);
+        }
+
+        public String Resultados()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (_inseriu)
+            {
+                long maxVal = -1;
+                long maxIndex = -1;
+                for (long i = 0; i < _nroTubos; i++)
+                {
+                    sb.AppendLine(String.Format("Tubo : {0}, bolinhas : {1}", i, _tubos[i]._qtdBolas));
+                    if (_tubos[i]._qtdBolas > maxVal)
+                    {
+                        maxVal = _tubos[i]._qtdBolas;
+                        maxIndex = i;
+                    }
+                }
+                sb.AppendLine(String.Format("Tubo com maior quantidade de bolinhas: {0}, quantidade: {1}", maxIndex, maxVal));
+                sb.AppendLine(String.Format("Quantidade bolinhas: {0}, qntd que sairam : {1}", _nroTubos, _tubos.Sum(tb => tb._qtdBolas)));
+                return sb.ToString();
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+        public Boolean InsereTodasBolinhas()
+        {
+                bool isok = false;
+            try
+            {
+                for (long i = 0; i < _nroTubos; i++)
+                {
+                    InsereBolinha(i);
+                }
+                isok = true;
+            }
+            catch (Exception)
+            {
+                isok = false;
+            }
+            finally
+            {
+                _inseriu = true;
+            }
+            return isok;
         }
 
         private void InsereBolinha(long nroTb)
@@ -91,17 +141,26 @@ namespace MaqTubosCs
             {
                 //começa na altura zero
                 long h = 0;
-                long nroTbFinal = -1;
+                long nroTbAtual = nroTb;
                 //chamar metodo de procurar Conexão em Tubo
                 Destino busca;
                 do
                 {
-                    busca = _tubos[nroTb].ProcuraConexao(h);
+                    busca = _tubos[nroTbAtual].ProcuraConexao(h);
                     h = busca.altura;
-
+                    if (busca.Valida() != Validacao.Fim)
+                    {
+                        nroTbAtual = busca.tuboDestino;
+                    }
                 }
-                while (busca.Valida() != Validacao.Fim || busca.Valida() != Validacao.Erro);
+                while (busca.Valida() == Validacao.Desvio);
 
+                if (busca.Valida() == Validacao.Erro)
+                {
+                    return;
+                }
+
+                _tubos[nroTbAtual]._qtdBolas++;
             }
             catch (Exception)
             {
