@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.IO;
 
 namespace MaqTubosCs
 {
@@ -99,6 +100,37 @@ namespace MaqTubosCs
             else
             {
                 Console.WriteLine("Você deve executar primeiro a inserção, para depois coletar os resultados!!!");
+            }
+        }
+
+        public void ResultadosCsv(String path, long tempoPreenchendo, long tempoCaminhando)
+        {
+            using (StreamWriter file = new StreamWriter(path))
+            {
+                if (_inseriu)
+                {
+                    //inicializando variaveis auxiliares em posição inválida.
+                    long maxVal = -1;
+                    long maxIndex = -1;
+                    file.WriteLine("Numero do Tubo,Quantidade de bolinhas");
+                    for (long i = 0; i < _nroTubos; i++)
+                    {
+                        file.WriteLine("{0},{1}", i, _tubos[i]._qtdBolas);
+                        if (_tubos[i]._qtdBolas > maxVal)
+                        {
+                            maxVal = _tubos[i]._qtdBolas;
+                            maxIndex = i;
+                        }
+                    }
+                    file.WriteLine("\n\n\n");
+                    file.WriteLine("Tubo com maior quantidade de bolinhas: {0},Quantidade:{1}",maxIndex,maxVal);
+                    file.WriteLine("Tempo de leitura do arquivo e preenchimento das listas: {0} ms",tempoPreenchendo);
+                    file.WriteLine("Tempo de busca das saidas para cada tubo: {0} ms", tempoCaminhando);
+                }
+                else
+                {
+                    Console.WriteLine("Você deve executar primeiro a inserção, para depois coletar os resultados!!!");
+                }
             }
         }
 

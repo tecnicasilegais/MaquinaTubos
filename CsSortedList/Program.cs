@@ -10,18 +10,25 @@ namespace MaqTubosCs
     class Program
     {
         private const String Root = @"../../../data/";
-        private static String filename = "caso8.txt"; //editar o nome aqui para outros testes
+        private static String filename = "caso8"; //editar o nome aqui para outros testes
+        private static String extensao = ".txt";
+        private static long _caminhamento;
+        private static long _preenchimento;
         static void Main(string[] args)
         {
             try
             {
+                Console.WriteLine("Digite o nome do arquivo a ser testado (sem extensão) (deve ser txt)");
+                filename = Console.ReadLine();
+
+
                 //concatena a pasta do diretorio do projeto com o nome do arquivo
-                String fullpath = String.Concat(Root, filename);
+                String fullpath = String.Concat(Root, filename, extensao);
 
                 //lê o documento em linhas, para facilitar atribuição posterior
                 String[] docLines = File.ReadAllLines(fullpath);
 
-                String[] leituraPrincipal = docLines[0].Split(" ");
+                String[] leituraPrincipal = docLines[0].Split(' ');
 
                 long nroTubos = Convert.ToInt64(leituraPrincipal[0]);
                 long altura = Convert.ToInt64(leituraPrincipal[1]);
@@ -48,22 +55,22 @@ namespace MaqTubosCs
                     maquina.InsereConexao(tb, h, tbD, hD);
                 }
                 sw.Stop();
-                Console.WriteLine("tempo para preenchimento: {0} ms", sw.ElapsedMilliseconds);
+                _preenchimento = sw.ElapsedMilliseconds;
 
                 sw = Stopwatch.StartNew();
 
-                var testa = maquina.InsereTodasBolinhas();
+                maquina.InsereTodasBolinhas();
 
                 sw.Stop();
-                Console.WriteLine("tempo de execução do andamento: {0} ms", sw.ElapsedMilliseconds);
+                _caminhamento = sw.ElapsedMilliseconds;
 
-                sw = Stopwatch.StartNew();
+                //imprime os resultados no console do windows
+                //maquina.ResultadosConsole();
 
-                maquina.ResultadosConsole();
-
-                sw.Stop();
-                Console.WriteLine("tempo da impressão de resultados: {0} ms", sw.ElapsedMilliseconds);
-
+                //imprime os resultados num CSV
+                maquina.ResultadosCsv(String.Concat(Root,"solucao_",filename,".csv"),
+                                                    _preenchimento, _caminhamento);
+                Console.WriteLine("Pronto!");
             }
             catch (Exception ex)
             {
