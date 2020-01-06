@@ -1,0 +1,28 @@
+Numero do Tubo,Quantidade de bolinhas
+0,2
+1,0
+2,1
+3,0
+4,0
+5,3
+6,0
+7,5
+8,0
+9,0
+10,3
+11,0
+12,0
+13,3
+14,1
+15,1
+16,0
+17,0
+18,1
+19,0
+
+
+
+
+Tubo com maior quantidade de bolinhas: 7,Quantidade:5
+Tempo de leitura do arquivo e preenchimento das listas: 4 ms
+Tempo de busca das saidas para cada tubo: 3 ms
